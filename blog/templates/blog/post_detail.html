@@ -1,0 +1,86 @@
+{% extends 'blog/base.html' %}
+{% load blog_tags_template %}
+{% block content %}
+{% get_tags as tags%}
+		<div class="container-fluid">
+			<div class="row">
+
+		<!--    ЭТО КОЛОНКА КОНТЕНТА ПОСТА -->
+
+				<div class="col-lg-8">
+
+		<!--    ЭТО ХЛЕБНЫЕ КРОШКИ -->
+
+					<nav aria-label="breadcrumb" class="mt-4">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Пост номер 1</li>
+						</ol>
+					</nav>
+<!--    ЭТО ТЕЛО ПОСТА -->
+					{% if post.photo %}
+					<img src="{{ post.photo.url }}" alt="{{post.title}}" class="img-fluid rounded" width="1000" height="1000">
+					{% endif %}
+					<hr>
+					<p class="lead">{{post.content}}
+					<hr>
+					<p class="lead text-right">Автор:<a href="#"> Вася пупкин</a></p>
+					<hr>
+					<div class="text-right">Опубликовано {{post.time_create}}</div>
+<!--    ЭТО КОМПОНЕНТ С КОММЕНТАРИЯМИ -->
+
+					<div class="card my-4">
+						<h5 class="card-header">Прокомментируй:</h5>
+						<div class="card-body">
+							<form>
+								<div class="form-group">
+									<textarea class="form-control" rows="3"></textarea>
+								</div>
+								<button type="submit" class="btn btn-primary">Отправить</button>
+							</form>
+						</div>
+					</div>
+					<div class="media mb-4">
+						<img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+						<div class="media-body">
+							<h5 class="mt-0">Дуся Иванова</h5>
+							Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье.
+						</div>
+					</div>
+				</div>
+
+		<!--    ЭТО ПРАВАЯ КОЛОНКА -->
+
+				<div class="col-md-4">
+					<div class="card my-4">
+						<h5 class="card-header">Теги</h5>
+						<div class="card-body">
+							<div class="row">
+								{% for tag in tags %}
+								<div class="col-lg-6">
+									<ul class="list-unstyled mb-0">
+										<li>
+											<a href="{{ tag.get_absolute_url }}">{{tag}}</a>
+										</li>
+									</ul>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="card my-4">
+						<h5 class="card-header">Последние статьи</h5>
+						{% for post in last %}
+							<div class="card-body">
+								<h5 class="card-title">{{post.title}}</h5>
+								<p class="card-text">{{post.short_view}}</p>
+								<a href="{{ post.get_absolute_url }}" class="card-link">Ссылка на статью</a>
+							</div>
+							<hr>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}
