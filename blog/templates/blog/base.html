@@ -27,23 +27,19 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
-						<a href='{% url "home" %}' class="nav-link">Главная</a>
-					</li>
-					<li class="nav-item active">
-						<a href="{% url 'contact' %}" class="nav-link">Контакты</a>
-					</li>
-					<li class="nav-item active">
-						<a href="{% url 'addpage' %}" class="nav-link">Добавить пост</a>
-					</li>
+					{% for item in menu %}
+						<li class="nav-item active">
+							<a href='{% url item.url_name %}' class="nav-link">{{ item.title }}</a>
+						</li>
+					{% endfor %}
 				</ul>
 				<form action="" class="form-inline my-2 my-lg-0">
 					<input type="text" class="form-control mr-sm-2" placeholder="Поиск" aria-label="Поиск">
 					<button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Поиск</button>
 				</form>
-				<a href="{% url 'signin' %}" class="btn btn-outline-light mr-2">Вход</a>
-				<a href="{% url 'signup' %}" class="btn btn-outline-light mr-2">Регистрация</a>
-				<a href="#" class="btn btn-outline-light">Выход</a>
+				{% for item in login_menu %}
+				<a href="{% url item.url_name %}" class="btn btn-outline-light mr-2">{{ item.title }}</a>
+				{% endfor %}
 			</div>
 		</nav>
         {% endblock %}
