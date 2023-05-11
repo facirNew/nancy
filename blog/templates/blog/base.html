@@ -14,10 +14,10 @@
 	<body style="background-color: antiquewhite">
         {% block navi %}
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-			<a href="#" class="navbar-brand">
+			<a href="https://www.python.org/" class="navbar-brand">
 				<img src="{% static 'blog/img/Python-logo-notext.svg' %}" width="30" height="30" alt="logo">
 			</a>
-			<a href="#" class="navbar-brand">
+			<a href="https://nuxtjs.org/" class="navbar-brand">
 				<img src="{% static 'blog/img/Nuxt_logo.svg' %}" width="30" height="30" alt="logo">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -37,6 +37,9 @@
 					<input type="text" class="form-control mr-sm-2" placeholder="Поиск" aria-label="Поиск">
 					<button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Поиск</button>
 				</form>
+				{% if request.user.is_authenticated %}
+				<button class="btn btn-outline-light mr-2" disabled>{{ user.username }}</button>
+				{% endif %}
 				{% for item in login_menu %}
 				<a href="{% url item.url_name %}" class="btn btn-outline-light mr-2">{{ item.title }}</a>
 				{% endfor %}

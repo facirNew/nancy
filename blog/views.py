@@ -1,8 +1,11 @@
+from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .form import AddPostForm, RegisterUserForm
+from .form import AddPostForm, RegisterUserForm, LoginUserForm
 from .models import *
 from .utils import *
 
@@ -76,14 +79,17 @@ class BlogThank(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class BlogSignIn(DataMixin, ListView):
-    model = Blog
+class BlogSignIn(DataMixin, LoginView):
+    form_class = LoginUserForm
     template_name = 'blog/signin.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Вход')
+        c_def = self.get_user_context(title='Авторизация')
         return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 class BlogSignUp(DataMixin, CreateView):
@@ -95,4 +101,10 @@ class BlogSignUp(DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Регистрация')
         return dict(list(context.items()) + list(c_def.items()))
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
 

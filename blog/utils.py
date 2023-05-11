@@ -5,12 +5,12 @@ menu = [{'title': 'Главная', 'url_name': 'home'},
 
 login_menu = [{'title': 'Вход', 'url_name': 'signin'},
               {'title': 'Регистрация', 'url_name': 'signup'},
-              {'title': 'Выход', 'url_name': 'home'},
+              {'title': 'Выход', 'url_name': 'logout'},
               ]
 
 
 class DataMixin:
-    paginate_by = 3
+    paginate_by = 9
 
     def get_user_context(self, **kwargs):
         context = kwargs
