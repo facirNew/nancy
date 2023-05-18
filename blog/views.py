@@ -20,6 +20,9 @@ class BlogHome(DataMixin, ListView):
         c_def = self.get_user_context(title='Главная страница')
         return dict(list(context.items()) + list(c_def.items()))
 
+    def get_queryset(self):
+        return Blog.objects.filter(is_published=True).prefetch_related('tags')
+
 
 class BlogContent(DataMixin, DetailView):
     model = Blog
@@ -45,7 +48,7 @@ class BlogTagSearch(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Blog.objects.filter(tags__slug=self.kwargs['tag_slug'], is_published=True)
+        return Blog.objects.filter(tags__slug=self.kwargs['tag_slug'], is_published=True).prefetch_related('tags')
 
 
 class BlogAddPage(DataMixin, LoginRequiredMixin, CreateView):
